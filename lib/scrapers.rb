@@ -1,13 +1,9 @@
-# require 'nokogiri'
-# require 'open-uri'
-# require 'pry'
 require_relative '../config/environment'
 
 class PowerScraper
   def scrape_power(url)
     doc = Nokogiri::HTML(open(url))
-    # name: doc.css("#PageHeader.page-header .page-header__main h1.page-header__title").text
-    # short_descrip: & capabilities: doc.css("#mw-content-text p").text
+
     power_profile = {
       name: doc.css("#PageHeader.page-header .page-header__main h1.page-header__title").text
     }
@@ -50,6 +46,7 @@ class PowerScraper
             power_profile[sym] << jump.next_element.text + "\n"
             jump = jump.next_element
           end
+          
         else # Collect and format ordinary list items.
           # Create category in hash
           power_profile[sym] = heading.next_element.children.map  do |child|
