@@ -1,0 +1,4 @@
+POSSIBLE EXPANSIONS
+1. build redact / dox method for secret identities
+2. add functionality to remove a power from the library
+3. add functionality to list all heroes or all villains
