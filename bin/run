@@ -1,0 +1,7 @@
+#!/usr/local/bin/ruby
+
+require_relative '../config/environment'
+
+CommandPrompt.new.loop
+
+puts "Thanks for playing!"
