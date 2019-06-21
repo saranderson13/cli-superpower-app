@@ -1,6 +1,4 @@
 require_relative '../config/environment'
-# extend InputValidation
-# extend Findable
 
 class Power
   extend Resources::InputValidation
@@ -24,33 +22,24 @@ class Power
 
   ### Command Prompt to manually populate the library
   def self.populate_library
-      puts "\nYou can randomly generate 10 superpowers at a time."
-      puts "How many powers would you like to send to the library?"
       selection = gets.chomp!
       selection = gets.chomp! until self.basic_range_validation(10, "generate", "Populate Library", selection)
 
       if selection != "exit"
-        powers = []
-        until powers.length == selection.to_i
+        new_powers = []
+        until new_powers.length == selection.to_i
           # Scrape a random power page
           temp_attr = PowerScraper.new.scrape_power(BASE_URL + "/wiki/Special:Random")
           # Create power from scrape IF IT DOES NOT EXIST IN LIBRARY ALREADY
-          powers << Power.new(temp_attr) if !self.find_by_name(temp_attr[:name])
+          new_powers << Power.new(temp_attr) if !self.find_by_name(temp_attr[:name])
         end
-        # List new powers
-        puts "\nThe following powers have been added to your library: "
-        powers.each_with_index { |pwr, i| puts "#{i + 1}. #{pwr.name}" }
-        puts "- - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
+        new_powers
       end
   end
 
   ### Method to add starter powers to the library
   def self.startup_populate_lib
       15.times { Power.new(PowerScraper.new.scrape_power(BASE_URL + "/wiki/Special:Random")) }
-  end
-
-  def self.explorer
-    # browse powers
   end
 
 
@@ -98,8 +87,6 @@ class Power
   end
 
 
-
-
   ### POWER DISPLAY & ASSOCIATED METHODS
   def display_attributes
     table = TTY::Table.new [
@@ -121,26 +108,4 @@ class Power
     puts Rainbow("\n- - - - - #{self.name}").magenta.bright
     puts table.render(:ascii, resize: true, multiline: true, column_widths: [15, 80], padding: [0, 0, 1, 0], alignments: [:center, :left])
   end
-
-  # def learn_options
-  #   print_options = ["Alternate Names", "Applications", "Associated Powers", "Limitations", "Related Techniques"]
-  #   options = [self.also_called, self.applications, self.associations, self.limitations, self.techniques]
-  #   print_options.delete_if.with_index {|option, i| options[i] == nil}
-  #   print_options << "See all heroes with this power" if self.heroes.length > 0
-  #   option_string = Rainbow("What would you like to learn more about?").bright + "\nEnter a number to make your selection:\n"
-  #   print_options.each_with_index { |option, i| option_string << "#{i + 1}. #{option}\n" }
-  #   option_string
-  # end
 end
-
-### MANUAL TEST
-# test = {name: "Peace Empowerment", short_descrip: "The power to achieve and be empowered by inner peace.", users: ["Hiko Seijuro -- Samurai X", "Guatama Buddha -- Buddhism, Po -- Kung-Fu Panda"]}
-# test_power = Power.new(PowerScraper.new.scrape_power("https://powerlisting.fandom.com/wiki/Special:Random"))
-# Power.new(PowerScraper.new.scrape_power("https://powerlisting.fandom.com/wiki/Special:Random"))
-# Power.new(PowerScraper.new.scrape_power("https://powerlisting.fandom.com/wiki/Special:Random"))
-# test_power.url_maker
-# test_power.display_attributes
-# test_power.learn_options
-# Power.populate_library
-
-# test_power.create_all_powers_from_profile
