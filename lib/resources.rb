@@ -12,14 +12,15 @@ module Resources
         if (1..upper_limiter).include?(selection.to_i) || selection == 'exit'
             true
         else
-            puts "\nResponse is out of range. Please enter a valid response."
+            puts  Rainbow("\n #{10022.chr("UTF-8")} ERROR: Input out of range. Please enter a valid input.").bright.bg("FF7575")
             if action_verb == "add" || action_verb == "remove" || action_verb == "view"
-              puts "Enter the number that corresponds to the option you would like to #{action_verb}."
-            elsif action_verb == "generate"
-              puts "Enter the number of powers you would like to #{action_verb}"
-              puts "You can #{action_verb} a maximum of #{upper_limiter} powers at a time."
+              puts "\n   Enter the number that corresponds to the option you would like to #{action_verb}."
+            elsif action_verb == "generate" # USED FOR POWER GENERATION ONLY
+              puts "\n   Enter the number of powers you would like to #{action_verb}"
+              puts "   You can #{action_verb} a maximum of #{upper_limiter} powers at a time."
             end
-            puts "Or to exit the #{interface} interface, enter 'exit'."
+            puts "   Or to exit the '#{interface}' interface, enter 'exit'."
+            puts "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
             false
         end
     end
@@ -28,7 +29,8 @@ module Resources
         if (1..upper_limiter).include?(selection.to_i) || selection == 'exit'
             true
         else
-            puts "Response is out of range. Please enter a valid response."
+          puts Rainbow("\n #{10022.chr("UTF-8")} ERROR: Input out of range. Please enter a valid input.").bright.bg("FF7575")
+          puts "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
             false
         end
     end
@@ -37,7 +39,9 @@ module Resources
         if YES_ARRAY.include?(selection) || NO_ARRAY.include?(selection)
             true
         else
-            puts "Please enter a valid response. (y/n)"
+            puts Rainbow("\n #{10022.chr("UTF-8")} ERROR: Input out of range. Please enter a valid input.").bright.bg("FF7575")
+            puts "\n   Enter 'y' for yes, or 'n' for no"
+            puts "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
             false
         end
     end
@@ -46,16 +50,21 @@ module Resources
       if YES_ARRAY.include?(selection) || NO_ARRAY.include?(selection) || selection == 'exit'
           true
       else
-          puts "Please enter a valid response. (y/n/exit)"
+          puts Rainbow("\n #{10022.chr("UTF-8")} ERROR: Input out of range. Please enter a valid input.").bright.bg("FF7575")
+          puts "\n   Enter 'y' for yes, 'n' for no, or 'exit' to return to the root menu."
+          puts "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
           false
       end
     end
 
-    def basic_cli_validation(selection)
-      if (1..4).include?(selection)
+    def basic_cli_validation
+      if (1..4).include?(self.selection)
         true
       else
-        puts "Please enter a valid selection ( 1 / 2 / 3 / 4 )"
+        puts Rainbow("\n #{10022.chr("UTF-8")} ERROR: Input out of range. Please enter a valid input.").bright.bg("FF7575")
+        puts "\n   Enter a number that corresponds to a menu option, or 'exit' to exit the program."
+        puts Rainbow("   WARNING:").bright.red + " Exiting the program will erase your character and power libraries."
+        puts "\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -"
         false
       end
     end

@@ -4,7 +4,7 @@ Bundler.require(:default, :development, :test)
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
-require 'rainbow'
+require 'rainbow/refinement'
 require 'tty-table'
 
 require './lib/resources.rb'

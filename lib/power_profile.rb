@@ -17,24 +17,19 @@ class Power
     @@all.clear
   end
   def self.list_all ### Formatted list of all powers in library (precede with 'puts' to call)
-    self.all.map.with_index { |pwr, i| "#{i + 1}. #{pwr.name}" }
+    self.all.map.with_index { |pwr, i| Rainbow("    #{i + 1}.").bright + " #{pwr.name}" }
   end
 
-  ### Command Prompt to manually populate the library
-  def self.populate_library
-      selection = gets.chomp!
-      selection = gets.chomp! until self.basic_range_validation(10, "generate", "Populate Library", selection)
-
-      if selection != "exit"
-        new_powers = []
-        until new_powers.length == selection.to_i
-          # Scrape a random power page
-          temp_attr = PowerScraper.new.scrape_power(BASE_URL + "/wiki/Special:Random")
-          # Create power from scrape IF IT DOES NOT EXIST IN LIBRARY ALREADY
-          new_powers << Power.new(temp_attr) if !self.find_by_name(temp_attr[:name])
-        end
-        new_powers
+  ### Scrapes a batch of random pages, & returns an array of new Power objects.
+  def self.populate_library(selection)
+      new_powers = []
+      until new_powers.length == selection.to_i
+        # Scrape a random power page
+        temp_attr = PowerScraper.new.scrape_power(BASE_URL + "/wiki/Special:Random")
+        # Create power from scrape IF IT DOES NOT EXIST IN LIBRARY ALREADY
+        new_powers << Power.new(temp_attr) if !self.find_by_name(temp_attr[:name])
       end
+      new_powers
   end
 
   ### Method to add starter powers to the library

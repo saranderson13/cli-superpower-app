@@ -23,7 +23,7 @@ class Hero
   end
 
   def self.list_all
-    self.all.map.with_index { |hero, i| "#{i + 1}. #{hero.hero_name}" }
+    self.all.map.with_index { |hero, i| Rainbow("    #{i + 1}.").bright + " #{hero.hero_name}" }
   end
 
   # def self.all_heroes
@@ -35,7 +35,7 @@ class Hero
   # end
 
   def list_powers
-      self.powers.map.with_index { |pwr, i| "#{i + 1}. #{pwr.name}" }
+      self.powers.map.with_index { |pwr, i| Rainbow("    #{i + 1}.").bright + " #{pwr.name}" }
   end
 
   def power_names
